@@ -138,6 +138,7 @@ body {
     margin: 0 auto 20px;
 }
 
+/* PERUBAHAN UTAMA: FIX BUTTONS CONTAINER UNTUK MOBILE */
 .buttons-container {
     position: relative;
     min-height: 150px;
@@ -150,7 +151,8 @@ body {
     background-color: rgba(255, 240, 243, 0.4);
     border-radius: 15px;
     margin: 20px 0;
-    overflow: visible !important;
+    overflow: hidden !important; /* Changed from visible to hidden */
+    isolation: isolate; /* Buat stacking context terpisah */
 }
 
 .btn-valentine {
@@ -163,13 +165,18 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     min-width: 160px;
     position: relative;
-    z-index: 5;
     cursor: pointer;
+    /* Optimasi untuk touch */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
+/* TOMBOL YES - PRIORITAS TINGGI */
 .btn-yes {
     background: linear-gradient(145deg, var(--success-green), #2d9100);
     color: white;
+    z-index: 100 !important; /* Z-index tinggi agar selalu di atas */
+    position: relative;
 }
 
 .btn-yes:hover, .btn-yes:focus {
@@ -178,19 +185,22 @@ body {
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* TOMBOL NO - DIATUR KHUSUS UNTUK MOBILE */
 .btn-no {
     background: linear-gradient(145deg, var(--primary-pink), var(--dark-pink));
     color: white;
     position: relative;
-    z-index: 10;
+    z-index: 1; /* Z-index lebih rendah dari YES */
+    /* Hanya gerakkan di desktop, di mobile lebih statis */
 }
 
 .btn-no:hover, .btn-no:focus {
     background: linear-gradient(145deg, var(--dark-pink), var(--primary-pink));
 }
 
+/* Animasi YES saat diklik */
 .btn-yes.enlarged {
-    animation: gentleEnlarge 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: gentleEnlarge 0.4s cubic-bezier(0.175, 1, 0.32, 1.275) forwards;
 }
 
 @keyframes gentleEnlarge {
@@ -427,7 +437,10 @@ body {
     color: white;
 }
 
-/* Responsive */
+/* =========================================== */
+/* MEDIA QUERIES UNTUK MOBILE FIX */
+/* =========================================== */
+
 @media (max-width: 768px) {
     .card-header-valentine h1 {
         font-size: 2.2rem;
@@ -493,5 +506,58 @@ body {
         width: 90%;
         right: 5%;
         left: 5%;
+    }
+    
+    /* FIX KHUSUS UNTUK MOBILE: Nonaktifkan animasi menghindar */
+    .btn-no {
+        /* Di mobile, tombol NO tidak bergerak */
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .btn-yes {
+        /* Pastikan YES selalu bisa diklik */
+        z-index: 1000 !important;
+        position: relative;
+    }
+}
+
+/* Mobile-specific optimization */
+@media (hover: none) and (pointer: coarse) {
+    /* Untuk perangkat touch-only (mobile) */
+    .buttons-container {
+        position: relative;
+        overflow: visible !important;
+    }
+    
+    .btn-yes {
+        /* Highlight khusus untuk touch */
+        -webkit-tap-highlight-color: rgba(56, 176, 0, 0.3);
+        position: relative;
+        z-index: 1000;
+    }
+    
+    .btn-no {
+        /* Di mobile, beri feedback berbeda */
+        opacity: 0.9;
+        transform: none !important;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Touch device detection styling */
+.touch-device .btn-no {
+    transform: none !important;
+    position: static !important;
+}
+
+/* Pastikan area klik cukup besar untuk jari */
+@media (max-width: 576px) {
+    .btn-valentine {
+        padding: 14px 28px;
+        min-height: 50px;
+        min-width: 130px;
     }
 }

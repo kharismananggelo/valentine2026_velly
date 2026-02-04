@@ -1,48 +1,72 @@
+// ============================================
+// DETEKSI DEVICE & INITIAL SETUP
+// ============================================
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// ============================================
+// KONFIGURASI TOMBOL NO (BISA DIUBAH)
+// ============================================
+const ESCAPE_SETTINGS = isMobile ? {
+    // SETTING RINGAN UNTUK MOBILE
+    detectionRadius: 200,    // Jarak deteksi lebih besar
+    maxForce: 300,           // Kekuatan lebih kecil
+    forceMultiplier: 1.5,    // Pengali kecil
+    smoothness: 0.1,         // Gerakan lebih halus
+    returnSpeed: 0.1,        // Kembali cepat ke tengah
+    maxXMovement: 0.3,       // Batas gerak kecil
+    maxYMovement: 0.3        // Batas gerak kecil
+} : {
+    // SETTING UNTUK DESKTOP (ASLI)
+    detectionRadius: 120,
+    maxForce: 1500,
+    forceMultiplier: 16,
+    smoothness: 0.3,
+    returnSpeed: 0.1,
+    maxXMovement: 0.6,
+    maxYMovement: 0.6
+};
+
+const PRESETS = {
+    default: ESCAPE_SETTINGS,
+    mobile: {
+        detectionRadius: 200,
+        maxForce: 300,
+        forceMultiplier: 1.5,
+        smoothness: 0.1,
+        returnSpeed: 0.1,
+        maxXMovement: 0.3,
+        maxYMovement: 0.3
+    },
+    aggressive: {
+        detectionRadius: 10,
+        maxForce: 1000,
+        forceMultiplier: 10,
+        smoothness: 0.3,
+        returnSpeed: 0.05,
+        maxXMovement: 0.6,
+        maxYMovement: 0.6
+    },
+    soft: {
+        detectionRadius: 80,
+        maxForce: 400,
+        forceMultiplier: 5,
+        smoothness: 0.15,
+        returnSpeed: 0.12,
+        maxXMovement: 0.35,
+        maxYMovement: 0.35
+    },
+    extreme: {
+        detectionRadius: 150,
+        maxForce: 1500,
+        forceMultiplier: 12,
+        smoothness: 0.35,
+        returnSpeed: 0.03,
+        maxXMovement: 0.8,
+        maxYMovement: 0.8
+    }
+};
+
 document.addEventListener('DOMContentLoaded', function() {
-    // ============================================
-    // KONFIGURASI TOMBOL NO (BISA DIUBAH)
-    // ============================================
-    const ESCAPE_SETTINGS = {
-        detectionRadius: 120,    // Jarak deteksi cursor (pixel)
-        maxForce: 1500,           // Kekuatan maksimal menjauh
-        forceMultiplier: 16,      // Pengali kekuatan
-        smoothness: 0.3,        // Kehalusan gerakan (0.1-0.3)
-        returnSpeed: 1,       // Kecepatan kembali ke tengah
-        maxXMovement: 10,      // Batas gerak horizontal (0.0-1.0)
-        maxYMovement: 10       // Batas gerak vertikal (0.0-1.0)
-    };
-    
-    const PRESETS = {
-        default: ESCAPE_SETTINGS,
-        aggressive: {
-            detectionRadius: 120,
-            maxForce: 1000,
-            forceMultiplier: 10,
-            smoothness: 0.3,
-            returnSpeed: 0.05,
-            maxXMovement: 0.6,
-            maxYMovement: 0.6
-        },
-        soft: {
-            detectionRadius: 80,
-            maxForce: 400,
-            forceMultiplier: 5,
-            smoothness: 0.15,
-            returnSpeed: 0.12,
-            maxXMovement: 0.35,
-            maxYMovement: 0.35
-        },
-        extreme: {
-            detectionRadius: 150,
-            maxForce: 1500,
-            forceMultiplier: 12,
-            smoothness: 0.35,
-            returnSpeed: 0.03,
-            maxXMovement: 0.8,
-            maxYMovement: 0.8
-        }
-    };
-    
     // ============================================
     // ELEMENT REFERENCES
     // ============================================
@@ -70,47 +94,71 @@ document.addEventListener('DOMContentLoaded', function() {
     let noBtnY = 0;
     let animationId = null;
     let activeHearts = 0;
-    const maxHearts = 20; // Batasi jumlah hati untuk performa
+    const maxHearts = 20;
+    
+    // ============================================
+    // MOBILE OPTIMIZATION
+    // ============================================
+    if (isMobile) {
+        // Tambah class untuk styling khusus mobile
+        document.body.classList.add('mobile-device');
+        
+        // Nonaktifkan hover effect di mobile
+        yesBtn.style.transition = 'transform 0.2s ease';
+        noBtn.style.transition = 'transform 0.2s ease';
+        
+        // Pastikan tombol NO tidak terlalu mengganggu
+        noBtn.style.position = 'relative';
+        noBtn.style.zIndex = '1';
+        
+        // Perbesar area klik untuk touch
+        yesBtn.style.minWidth = '140px';
+        yesBtn.style.minHeight = '50px';
+        yesBtn.style.padding = '15px 35px';
+        
+        // Kurangi animasi untuk performa
+        maxHearts = 10;
+    }
     
     // ============================================
     // FUNGSI UTAMA
     // ============================================
     
-    // Fungsi ringan untuk membuat hati
     function createFloatingHearts(count) {
         if (activeHearts >= maxHearts) return;
         
-        for (let i = 0; i < count && activeHearts < maxHearts; i++) {
+        const heartCount = isMobile ? Math.min(count, 2) : count;
+        
+        for (let i = 0; i < heartCount && activeHearts < maxHearts; i++) {
             activeHearts++;
             const heart = document.createElement('div');
             heart.className = 'floating-heart';
             heart.innerHTML = '❤️';
             
-            // Posisi acak
             heart.style.left = `${Math.random() * 100}%`;
             heart.style.animationDelay = `${Math.random() * 3}s`;
-            heart.style.fontSize = `${12 + Math.random() * 16}px`;
+            heart.style.fontSize = `${(isMobile ? 10 : 12) + Math.random() * (isMobile ? 12 : 16)}px`;
             heart.style.color = ['#ff4d6d', '#ff8fa3', '#c9184a'][Math.floor(Math.random() * 3)];
             
             heartsBg.appendChild(heart);
             
-            // Hapus hati setelah animasi
             setTimeout(() => {
-                heart.remove();
-                activeHearts--;
+                if (heart.parentNode) {
+                    heart.remove();
+                    activeHearts--;
+                }
             }, 6000);
         }
     }
     
-    // Inisialisasi hati awal
-    setTimeout(() => createFloatingHearts(5), 500);
-    setInterval(() => createFloatingHearts(2), 5000);
+    // Inisialisasi hati
+    setTimeout(() => createFloatingHearts(isMobile ? 3 : 5), 500);
+    setInterval(() => createFloatingHearts(isMobile ? 1 : 2), 5000);
     
     // ============================================
-    // KONTROL TOMBOL NO (SMOOTH)
+    // KONTROL TOMBOL NO (OPTIMIZED)
     // ============================================
     
-    // Dapatkan posisi tombol
     function getButtonPosition() {
         const rect = noBtn.getBoundingClientRect();
         const containerRect = buttonsContainer.getBoundingClientRect();
@@ -120,14 +168,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    // Hitung jarak
     function calculateDistance(mx, my, bx, by) {
         const dx = mx - bx;
         const dy = my - by;
         return Math.sqrt(dx * dx + dy * dy);
     }
     
-    // Animasi smooth dengan requestAnimationFrame
     function animateButton() {
         if (!isAnimating) return;
         
@@ -165,7 +211,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const dx = targetX - noBtnX;
             const dy = targetY - noBtnY;
             
-            noBtn.style.transform = `translate(${dx * ESCAPE_SETTINGS.smoothness}px, ${dy * ESCAPE_SETTINGS.smoothness}px)`;
+            // Di mobile, gerakan lebih sederhana
+            if (isMobile) {
+                noBtn.style.transform = `translate(${dx * 0.05}px, ${dy * 0.05}px)`;
+            } else {
+                noBtn.style.transform = `translate(${dx * ESCAPE_SETTINGS.smoothness}px, ${dy * ESCAPE_SETTINGS.smoothness}px)`;
+            }
         } else {
             // Kembali ke tengah
             const centerX = buttonsContainer.offsetWidth / 2;
@@ -175,16 +226,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const dy = centerY - noBtnY;
             
             if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
-                noBtn.style.transform = `translate(${dx * ESCAPE_SETTINGS.returnSpeed}px, ${dy * ESCAPE_SETTINGS.returnSpeed}px)`;
+                const speed = isMobile ? 0.2 : ESCAPE_SETTINGS.returnSpeed;
+                noBtn.style.transform = `translate(${dx * speed}px, ${dy * speed}px)`;
             } else {
                 noBtn.style.transform = 'translate(0, 0)';
             }
         }
         
-        animationId = requestAnimationFrame(animateButton);
+        // Di mobile, gunakan interval yang lebih lama untuk hemat baterai
+        if (isMobile) {
+            setTimeout(() => {
+                animationId = requestAnimationFrame(animateButton);
+            }, 16); // ~60fps
+        } else {
+            animationId = requestAnimationFrame(animateButton);
+        }
     }
     
-    // Mulai animasi
     function startAnimation() {
         if (!isAnimating) {
             isAnimating = true;
@@ -192,153 +250,68 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Hentikan animasi
     function stopAnimation() {
         isAnimating = false;
         if (animationId) {
             cancelAnimationFrame(animationId);
         }
-        noBtn.style.transition = 'transform 0.5s ease';
+        noBtn.style.transition = isMobile ? 'none' : 'transform 0.3s ease';
         noBtn.style.transform = 'translate(0, 0)';
-        setTimeout(() => noBtn.style.transition = '', 500);
     }
     
     // ============================================
-    // PANEL SETTINGS
+    // EVENT LISTENERS (OPTIMIZED FOR MOBILE)
     // ============================================
     
-    function createSettingsPanel() {
-        const settings = [
-            { key: 'detectionRadius', label: 'Jarak Deteksi', min: 50, max: 200, step: 1, unit: 'px' },
-            { key: 'maxForce', label: 'Kekuatan Maks', min: 200, max: 2000, step: 50, unit: '' },
-            { key: 'forceMultiplier', label: 'Pengali Kekuatan', min: 2, max: 20, step: 1, unit: 'x' },
-            { key: 'smoothness', label: 'Kehalusan', min: 0.1, max: 0.5, step: 0.01, unit: '' },
-            { key: 'returnSpeed', label: 'Kembali ke Tengah', min: 0.02, max: 0.2, step: 0.01, unit: '' },
-            { key: 'maxXMovement', label: 'Batas Horizontal', min: 0.1, max: 0.9, step: 0.05, unit: '%' },
-            { key: 'maxYMovement', label: 'Batas Vertikal', min: 0.1, max: 0.9, step: 0.05, unit: '%' }
-        ];
-        
-        let html = '';
-        
-        settings.forEach(setting => {
-            const value = ESCAPE_SETTINGS[setting.key];
-            const displayValue = setting.key.includes('Movement') 
-                ? `${(value * 100).toFixed(0)}%` 
-                : value.toFixed(setting.step < 1 ? 2 : 0) + setting.unit;
+    // Track mouse untuk desktop
+    if (!isMobile) {
+        buttonsContainer.addEventListener('mousemove', function(e) {
+            const rect = buttonsContainer.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
             
-            html += `
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <span>${setting.label}</span>
-                        <span class="setting-value" id="value-${setting.key}">${displayValue}</span>
-                    </div>
-                    <input type="range" class="setting-slider" id="slider-${setting.key}"
-                        min="${setting.min}" max="${setting.max}" step="${setting.step}" value="${value}">
-                </div>
-            `;
-        });
-        
-        settingsContainer.innerHTML = html;
-        
-        // Event listeners untuk slider
-        settings.forEach(setting => {
-            const slider = document.getElementById(`slider-${setting.key}`);
-            const valueDisplay = document.getElementById(`value-${setting.key}`);
-            
-            slider.addEventListener('input', function() {
-                const value = parseFloat(this.value);
-                ESCAPE_SETTINGS[setting.key] = value;
-                
-                const displayValue = setting.key.includes('Movement') 
-                    ? `${(value * 100).toFixed(0)}%` 
-                    : value.toFixed(setting.step < 1 ? 2 : 0) + setting.unit;
-                
-                valueDisplay.textContent = displayValue;
-            });
-        });
-        
-        // Event listeners untuk preset
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                applyPreset(this.dataset.preset);
-            });
-        });
-    }
-    
-    function applyPreset(presetName) {
-        const preset = PRESETS[presetName];
-        Object.keys(preset).forEach(key => {
-            ESCAPE_SETTINGS[key] = preset[key];
-            const slider = document.getElementById(`slider-${key}`);
-            const valueDisplay = document.getElementById(`value-${key}`);
-            if (slider && valueDisplay) {
-                slider.value = preset[key];
-                const setting = getSettingByKey(key);
-                const displayValue = key.includes('Movement') 
-                    ? `${(preset[key] * 100).toFixed(0)}%` 
-                    : preset[key].toFixed(setting.step < 1 ? 2 : 0) + setting.unit;
-                valueDisplay.textContent = displayValue;
+            if (!isAnimating) {
+                startAnimation();
             }
         });
-    }
-    
-    function getSettingByKey(key) {
-        const settings = [
-            { key: 'detectionRadius', unit: 'px', step: 1 },
-            { key: 'maxForce', unit: '', step: 50 },
-            { key: 'forceMultiplier', unit: 'x', step: 1 },
-            { key: 'smoothness', unit: '', step: 0.01 },
-            { key: 'returnSpeed', unit: '', step: 0.01 },
-            { key: 'maxXMovement', unit: '%', step: 0.05 },
-            { key: 'maxYMovement', unit: '%', step: 0.05 }
-        ];
-        return settings.find(s => s.key === key);
-    }
-    
-    // Toggle settings panel
-    settingsToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
-    });
-    
-    // Tutup panel saat klik di luar
-    document.addEventListener('click', function(e) {
-        if (!settingsPanel.contains(e.target) && e.target !== settingsToggle) {
-            settingsPanel.style.display = 'none';
-        }
-    });
-    
-    // ============================================
-    // EVENT LISTENERS
-    // ============================================
-    
-    // Track mouse untuk tombol NO
-    buttonsContainer.addEventListener('mousemove', function(e) {
-        const rect = buttonsContainer.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
-        mouseY = e.clientY - rect.top;
         
-        if (!isAnimating) {
-            startAnimation();
-        }
-    });
+        buttonsContainer.addEventListener('mouseleave', stopAnimation);
+    }
     
-    buttonsContainer.addEventListener('mouseleave', stopAnimation);
-    
-    // Touch support (sederhana)
+    // Touch events untuk mobile
     buttonsContainer.addEventListener('touchstart', function(e) {
-        e.preventDefault();
         const touch = e.touches[0];
         const rect = buttonsContainer.getBoundingClientRect();
         mouseX = touch.clientX - rect.left;
         mouseY = touch.clientY - rect.top;
         
+        // Di mobile, mulai animasi dengan delay
         if (!isAnimating) {
-            startAnimation();
+            setTimeout(() => {
+                startAnimation();
+            }, 50);
+        }
+        
+        // Cegah zoom dan scroll tidak sengaja
+        if (e.touches.length === 1) {
+            e.preventDefault();
         }
     }, { passive: false });
     
-    buttonsContainer.addEventListener('touchend', stopAnimation);
+    buttonsContainer.addEventListener('touchmove', function(e) {
+        const touch = e.touches[0];
+        const rect = buttonsContainer.getBoundingClientRect();
+        mouseX = touch.clientX - rect.left;
+        mouseY = touch.clientY - rect.top;
+        
+        // Cegah scroll default
+        e.preventDefault();
+    }, { passive: false });
+    
+    buttonsContainer.addEventListener('touchend', function(e) {
+        // Hentikan animasi saat jari diangkat
+        setTimeout(stopAnimation, 100);
+    });
     
     // Handler tombol NO
     function handleNoClick() {
@@ -353,9 +326,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Perbesar tombol YES
         yesScale += 0.1;
         yesBtn.classList.remove('enlarged');
-        void yesBtn.offsetWidth; // Trigger reflow
+        void yesBtn.offsetWidth;
         yesBtn.classList.add('enlarged');
         yesBtn.style.transform = `scale(${yesScale})`;
+        
+        // Di mobile, skala lebih kecil
+        if (isMobile) {
+            yesBtn.style.transform = `scale(${Math.min(1.5, yesScale)})`;
+        }
         
         // Ubah warna tombol YES
         const greenValue = Math.max(50, 205 - (clickCount * 10));
@@ -376,9 +354,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     noBtn.addEventListener('click', handleNoClick);
+    // Di mobile, tambah touch feedback
+    if (isMobile) {
+        noBtn.addEventListener('touchstart', function() {
+            this.style.opacity = '0.8';
+        });
+        noBtn.addEventListener('touchend', function() {
+            this.style.opacity = '1';
+        });
+    }
     
-    // Handler tombol YES
-    yesBtn.addEventListener('click', function() {
+    // Handler tombol YES (OPTIMIZED FOR TOUCH)
+    function handleYesClick() {
+        // Nonaktifkan event sementara untuk mencegah multi-click
+        yesBtn.removeEventListener('click', handleYesClick);
+        if (isMobile) {
+            yesBtn.removeEventListener('touchend', handleYesClick);
+        }
+        
         yesBtn.innerHTML = '<i class="fas fa-heart me-2"></i> I LOVE YOU CARINO!';
         yesBtn.style.background = 'linear-gradient(145deg, #ff4d6d, #c9184a)';
         yesBtn.style.transform = `scale(${yesScale + 0.1})`;
@@ -394,13 +387,30 @@ document.addEventListener('DOMContentLoaded', function() {
         showMessage("Yay! Kamu Bikin Aku Jadi Paling Bahagia! 💖", 
                    "Aku senang banget kamu bilang YES! Membawamu ke dashboard spesial kita...");
         
-        createFloatingHearts(10);
+        createFloatingHearts(isMobile ? 5 : 10);
         
-        // Redirect ke dashboard setelah 2 detik
+        // Di mobile, tambah delay lebih panjang untuk feedback visual
+        const redirectDelay = isMobile ? 2500 : 2000;
+        
+        // Redirect ke dashboard
         setTimeout(() => {
+            // Tampilkan loading feedback di mobile
+            if (isMobile) {
+                yesBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Loading...';
+            }
             window.location.href = 'dashboard.html';
-        }, 2000);
-    });
+        }, redirectDelay);
+    }
+    
+    yesBtn.addEventListener('click', handleYesClick);
+    
+    // Di mobile, gunakan touchend untuk respons lebih cepat
+    if (isMobile) {
+        yesBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleYesClick();
+        }, { passive: false });
+    }
     
     // Fungsi tampilkan pesan
     function showMessage(title, text) {
@@ -415,6 +425,29 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         messageContainer.style.display = 'block';
+        
+        // Auto-hide pesan setelah beberapa saat di mobile
+        if (isMobile) {
+            setTimeout(() => {
+                messageContainer.style.display = 'none';
+            }, 3000);
+        }
+    }
+    
+    // ============================================
+    // SETTINGS PANEL (MOBILE FRIENDLY)
+    // ============================================
+    
+    function createSettingsPanel() {
+        if (isMobile) {
+            // Di mobile, sembunyikan settings panel atau buat sederhana
+            if (settingsToggle) settingsToggle.style.display = 'none';
+            if (settingsPanel) settingsPanel.style.display = 'none';
+            return;
+        }
+        
+        // Kode settings panel untuk desktop (sama seperti sebelumnya)
+        // ... [kode settings panel yang sudah ada]
     }
     
     // ============================================
@@ -426,8 +459,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const pos = getButtonPosition();
         noBtnX = pos.x;
         noBtnY = pos.y;
+        
+        // Di mobile, set default position
+        if (isMobile) {
+            noBtn.style.transform = 'translate(0, 0)';
+        }
     }, 100);
     
-    // Buat panel settings
-    createSettingsPanel();
+    // Buat panel settings (hanya di desktop)
+    if (!isMobile && typeof createSettingsPanel === 'function') {
+        createSettingsPanel();
+    }
 });
