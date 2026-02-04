@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // KONFIGURASI TOMBOL NO (BISA DIUBAH)
     // ============================================
     const ESCAPE_SETTINGS = {
-        detectionRadius: 250,    // Jarak deteksi cursor (pixel)
+        detectionRadius: 120,    // Jarak deteksi cursor (pixel)
         maxForce: 1500,           // Kekuatan maksimal menjauh
         forceMultiplier: 16,      // Pengali kekuatan
         smoothness: 0.3,        // Kehalusan gerakan (0.1-0.3)
