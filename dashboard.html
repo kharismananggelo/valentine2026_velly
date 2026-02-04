@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Dashboard 💖</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffafcc 0%, #bde0fe 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        /* Back Button */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #ff4d6d;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: scale(1.1) translateX(-5px);
+            background: #c9184a;
+            color: white;
+        }
+        
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dashboard-header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dashboard-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .initials-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .initial-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            border: 3px solid #ffd166;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Countdown */
+        .countdown-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 3px solid #ff4d6d;
+        }
+        
+        .countdown-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #c9184a;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: linear-gradient(135deg, #ff8fa3, #ff4d6d);
+            border-radius: 15px;
+            padding: 25px 20px;
+            min-width: 130px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+        
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .countdown-label {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.9;
+        }
+        
+        /* Love Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #ff4d6d;
+            transition: all 0.4s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            color: #ff4d6d;
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-card h3 {
+            color: #c9184a;
+            margin-bottom: 15px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+        }
+        
+        .dashboard-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        /* GALLERY BESAR - Setiap foto satu baris penuh */
+        .gallery-container {
+            margin-bottom: 50px;
+        }
+        
+        .gallery-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #c9184a;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .gallery-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+        
+        /* Gallery Item - Satu per baris */
+        .gallery-item {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease;
+            border: 3px solid #ff4d6d;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* GALLERY IMAGE CONTAINER - HEIGHT RELATIF MENGIKUTI FOTO */
+        .gallery-img {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 200px; /* Minimum height */
+        }
+        
+        /* CONTAINER UNTUK MENAMPUNG GAMBAR DENGAN ASPECT RATIO ASLI */
+        .gallery-img-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* GAMBAR DENGAN ASPECT RATIO ASLI - HEIGHT MENGIKUTI FOTO */
+        .gallery-img-container img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 600px; /* Maximum height untuk desktop */
+            object-fit: contain;
+            object-position: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: block;
+        }
+        
+        /* BACKGROUND UNTUK AREA KOSONG */
+        .gallery-img {
+            background: linear-gradient(135deg, #ff4d6d, #c9184a, #ff8fa3);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Fallback untuk gambar yang tidak tersedia */
+        .gallery-img i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            color: white;
+            opacity: 0.7;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            animation: floatIcon 3s ease-in-out infinite;
+            display: none;
+        }
+        
+        /* Tampilkan ikon jika tidak ada gambar */
+        .gallery-img-container:empty + i {
+            display: block;
+        }
+        
+        .gallery-img:not(:has(.gallery-img-container img)) i {
+            display: block;
+        }
+        
+        @keyframes floatIcon {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -60%) scale(1.05); }
+        }
+        
+        /* Bagian Deskripsi Besar */
+        .gallery-description {
+            padding: 40px;
+            background: linear-gradient(135deg, #fff0f3, white);
+        }
+        
+        .gallery-description h4 {
+            color: #c9184a;
+            margin-bottom: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            border-bottom: 3px solid #ff8fa3;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .gallery-description p {
+            color: #555;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        
+        .gallery-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ff4d6d;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        /* MINI GALLERY - UKURAN MENGIKUTI FOTO */
+        .mini-gallery-container {
+            margin-bottom: 50px;
+        }
+
+        .mini-gallery-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #c9184a;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .mini-gallery-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        /* GRID FLEXIBLE - MENYESUAIKAN UKURAN FOTO */
+        .mini-gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .mini-gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+            flex: 0 0 auto; /* Tidak flex, ukuran mengikuti konten */
+        }
+
+        /* UKURAN DASAR BERDASARKAN ASPECT RATIO */
+        .mini-gallery-item.portrait {
+            width: 180px;
+            height: 240px;
+        }
+
+        .mini-gallery-item.landscape {
+            width: 240px;
+            height: 180px;
+        }
+
+        .mini-gallery-item.square {
+            width: 200px;
+            height: 200px;
+        }
+
+        /* Default square jika belum terdeteksi */
+        .mini-gallery-item:not(.portrait):not(.landscape):not(.square) {
+            width: 200px;
+            height: 200px;
+        }
+
+        /* GAMBAR MENYESUAIKAN CONTAINER */
+        .mini-gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .mini-gallery-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+        }
+
+        .mini-gallery-item:hover .mini-gallery-img {
+            transform: scale(1.1);
+        }
+
+        /* Fallback icon untuk mini gallery */
+        .mini-gallery-item i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            color: white;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Overlay untuk efek hover */
+        .mini-gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(201, 24, 74, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+        }
+
+        .mini-gallery-item:hover .mini-gallery-overlay {
+            opacity: 1;
+        }
+
+        .overlay-heart {
+            font-size: 2rem;
+            color: white;
+            animation: pulseHeart 1.5s infinite;
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* AREA PENUTUP */
+        .closure-container {
+            background: linear-gradient(135deg, #fff0f3, white);
+            border-radius: 25px;
+            padding: 50px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid #ff4d6d;
+            text-align: center;
+        }
+
+        .closure-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2rem;
+            color: #c9184a;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #ff8fa3;
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+
+        .closure-message {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 40px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 5px solid #ff4d6d;
+        }
+
+        .closure-signature {
+            text-align: right;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #c9184a;
+            margin-top: 30px;
+        }
+
+        .closure-date {
+            color: #ff4d6d;
+            font-weight: 600;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+        
+        /* Love Meter */
+        .love-meter {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 3px solid #ff4d6d;
+        }
+        
+        .meter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #c9184a;
+            margin-bottom: 30px;
+        }
+        
+        .meter-bar {
+            height: 35px;
+            background: #e0e0e0;
+            border-radius: 17px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 2px solid #ff8fa3;
+        }
+        
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4d6d, #c9184a);
+            border-radius: 17px;
+            width: 100%;
+            transition: width 1s ease;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        #loveMessage {
+            color: #c9184a;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .btn-love {
+            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
+        }
+        
+        .btn-love:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.4);
+        }
+        
+        /* Footer */
+        .dashboard-footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin-top: 30px;
+            border: 2px solid #ff8fa3;
+        }
+        
+        .dashboard-footer p:first-child {
+            font-size: 1.3rem;
+            color: #c9184a;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .gallery-img-container img {
+                max-height: 550px;
+            }
+            
+            .mini-gallery-item.portrait {
+                width: 160px;
+                height: 210px;
+            }
+            
+            .mini-gallery-item.landscape {
+                width: 210px;
+                height: 160px;
+            }
+            
+            .mini-gallery-item.square {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .mini-gallery-item:not(.portrait):not(.landscape):not(.square) {
+                width: 180px;
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-img-container img {
+                max-height: 500px;
+            }
+            
+            .gallery-img i {
+                font-size: 6rem;
+            }
+            
+            .gallery-description {
+                padding: 30px;
+            }
+            
+            .gallery-description h4 {
+                font-size: 2.3rem;
+            }
+            
+            .gallery-description p {
+                font-size: 1.1rem;
+            }
+            
+            .mini-gallery-item.portrait {
+                width: 140px;
+                height: 190px;
+            }
+            
+            .mini-gallery-item.landscape {
+                width: 190px;
+                height: 140px;
+            }
+            
+            .mini-gallery-item.square {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .mini-gallery-item:not(.portrait):not(.landscape):not(.square) {
+                width: 160px;
+                height: 160px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 30px 20px;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 2.3rem;
+            }
+            
+            .countdown-title {
+                font-size: 2.2rem;
+            }
+            
+            .countdown-item {
+                min-width: 100px;
+                padding: 20px 15px;
+            }
+            
+            .countdown-number {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-img-container img {
+                max-height: 450px;
+            }
+            
+            .gallery-img i {
+                font-size: 5rem;
+            }
+            
+            .gallery-description {
+                padding: 25px;
+            }
+            
+            .gallery-description h4 {
+                font-size: 2rem;
+            }
+            
+            .meter-title {
+                font-size: 2.3rem;
+            }
+            
+            .mini-gallery-grid {
+                gap: 15px;
+            }
+            
+            .mini-gallery-item.portrait {
+                width: 120px;
+                height: 160px;
+            }
+            
+            .mini-gallery-item.landscape {
+                width: 160px;
+                height: 120px;
+            }
+            
+            .mini-gallery-item.square {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .mini-gallery-item:not(.portrait):not(.landscape):not(.square) {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .closure-container {
+                padding: 30px 20px;
+            }
+            
+            .closure-title {
+                font-size: 2.5rem;
+            }
+            
+            .closure-message {
+                font-size: 1.2rem;
+                padding: 20px;
+            }
+            
+            .back-button {
+                width: 45px;
+                height: 45px;
+                top: 15px;
+                left: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            body {
+                padding: 15px;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .initial-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .countdown-timer {
+                gap: 15px;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px 10px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .dashboard-card {
+                padding: 25px;
+            }
+            
+            .gallery-img-container img {
+                max-height: 400px;
+            }
+            
+            .gallery-img i {
+                font-size: 4rem;
+            }
+            
+            .gallery-description {
+                padding: 20px;
+            }
+            
+            .gallery-description h4 {
+                font-size: 1.8rem;
+            }
+            
+            .gallery-description p {
+                font-size: 1rem;
+            }
+            
+            .mini-gallery-grid {
+                gap: 12px;
+            }
+            
+            .mini-gallery-item.portrait {
+                width: 100px;
+                height: 135px;
+            }
+            
+            .mini-gallery-item.landscape {
+                width: 135px;
+                height: 100px;
+            }
+            
+            .mini-gallery-item.square {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .mini-gallery-item:not(.portrait):not(.landscape):not(.square) {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .mini-gallery-title {
+                font-size: 2.3rem;
+            }
+            
+            .mini-gallery-item i {
+                font-size: 2rem;
+            }
+            
+            .closure-message {
+                font-size: 1.1rem;
+            }
+            
+            .closure-signature {
+                font-size: 1.8rem;
+            }
+            
+            .love-meter {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .gallery-img-container img {
+                max-height: 350px;
+            }
+            
+            .gallery-img {
+                padding: 15px;
+                min-height: 150px;
+            }
+            
+            .mini-gallery-grid {
+                gap: 10px;
+            }
+            
+            .mini-gallery-item.portrait {
+                width: 85px;
+                height: 115px;
+            }
+            
+            .mini-gallery-item.landscape {
+                width: 115px;
+                height: 85px;
+            }
+            
+            .mini-gallery-item.square {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .mini-gallery-item:not(.portrait):not(.landscape):not(.square) {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="./index.html" class="back-button" title="Kembali ke halaman utama">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>💖 Welcome to Our Love Dashboard! 💖</h1>
+            <p class="mb-0">Celebrating our special Valentine's Day together!</p>
+            <div class="initials-container mt-3">
+                <div class="initial-circle">K</div>
+                <div class="initial-circle">❤️</div>
+                <div class="initial-circle">K</div>
+            </div>
+        </div>
+        
+        <!-- Countdown -->
+        <div class="countdown-container">
+            <h2 class="countdown-title">Countdown to Our Valentine! ⏰</h2>
+            <div class="countdown-timer" id="countdownTimer">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+            <p class="mt-3" style="color: #c9184a; font-size: 1.2rem;">Can't wait to see you, my love! ❤️</p>
+        </div>
+        
+        <!-- Love Cards -->
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Our Love Story</h3>
+                <p>Every moment with you feels like a beautiful chapter in a fairy tale. From the first time we met to this Valentine's Day, every memory is etched in my heart. I cherish every laugh, every conversation, and every smile we've shared. Can't wait to write many more beautiful chapters together! 📖💕</p>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>Date Plans</h3>
+                <p>YTTA :v</p>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>Special Surprises</h3>
+                <p>I've been preparing little surprises throughout the day just to see that beautiful smile of yours! there will be special moments waiting for you. But remember, the greatest gift of all is having you in my life. You truly are my everything, my happiness, and my reason to smile every day! 🎁💝</p>
+            </div>
+        </div>
+        
+        <!-- PHOTO GALLERY BESAR - Setiap foto satu baris penuh -->
+        <div class="gallery-container">
+            <h2 class="gallery-title">Our Love Gallery 💞</h2>
+            <p class="gallery-subtitle">Memories we've created and beautiful moments we'll cherish forever!</p>
+            
+            <!-- Photo 1 - Full Width -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo1.jpeg" alt="Foto pertama kita bersama" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>First Photo 💕</h4>
+                    <p>Pertama kali foto ama ayang di Valentine 2023. waktu itu saya kaget kok tiba tiba kania ajak foto saya ya</p>
+                    <div class="gallery-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>Lohhhhh Kagettttt</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 2 - Full Width -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo2.jpeg" alt="Momen spesial kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>First Nongki Bareng ✨</h4>
+                    <p>disini kita pertama kali nongki bareng di giota lohh ayanggggg. sama orangg gereja, masih ingat ngga? </p>
+                    <div class="gallery-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>A collection of precious memories</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 3 - Full Width -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo3.jpeg" alt="Lagu spesial kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-music"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>First Time Ngopi Berdua</h4>
+                    <p>ini pertama kali kita ngopi berdua diayam bakar depan HU ayangg, ayang masih pura pura suka kopi hitam disini, heeee -_-</p>
+                    <div class="gallery-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>"saya suka kopi pahit kok, aku mah beda ama cewe lain diluar sana"</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 4 - Full Width -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo4.jpeg" alt="Foto masa depan kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>Pertama kali minum soju di nako bareng 📸</h4>
+                    <p>kita kenako bareng jessica dan kak neri, disini pertama kali saya liat ayangg minum alkoholl, keren pikir saya</p>
+                    <div class="gallery-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>keren sampai tau ayang kalo mabuk itu lasak -_-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 5 - Full Width -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo5.jpeg" alt="Liburan impian kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>First time Masuk Rumah Ayangg</h4>
+                    <p>disini pertama kali saya ngomong samaa mamakk, belum terlalu dekat waktu itu. kita berdua pun masih sebatas temen EAAAAA</p>
+                    <div class="gallery-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>tak sadar ternyata ini pertama kali kerumah calon istri, HEHE</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Photo 6 - Full Width -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo6.png" alt="Malam romantis kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>First Time Ngeliat sisi Feminim Ayangggg</h4>
+                    <p>disini kaget ternyata ayangg yang dingin dingin cool gitu ternyata punya sisi begini juga :v</p>
+                    <div class="gallery-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Melet Melet Menggoda :v</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Photo 7 -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo7.png" alt="Malam romantis kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>Ayang Nangis Betulan Nangis</h4>
+                    <p>Comelll euyy, Pertama kali liat ayangg nangiss begini ahahahahaha</p>
+                    <div class="gallery-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>saya lohh yang lap air mata ama keringat ayang itu :v</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo 8 -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo8.png" alt="Malam romantis kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>First Time liat ayang mabokk</h4>
+                    <p>ayangg mabuk makinn cekcii euy mukanya hehe, kelakuan ayang jadi kayak comell gituu</p>
+                    <div class="gallery-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Baru sadar saya ternyata cewe cool itu aslinya brutal</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Photo 9 -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo9.png" alt="Malam romantis kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>Modus ayang biar saya rangkul yeeeeee</h4>
+                    <p>pura pura tengill, aslinya cuma mau deket deket ama saya kannnn, yeee ngakuuuuu</p>
+                    <div class="gallery-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>mecum mecum mecumm ayangg</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Photo 10 -->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo10.png" alt="Malam romantis kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>Teman tapi mesra ini mahh</h4>
+                    <p>disini kita dah kayak pacaran tapi belum ada status hehehe, ayang comell kan difotonya</p>
+                    <div class="gallery-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>sudah mulai sadar ternyata saya suka sama kania evellyn</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Photo 11-->
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <div class="gallery-img-container">
+                        <img src="./assets/gallery/photo11.png" alt="Malam romantis kita" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                    </div>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="gallery-description">
+                    <h4>First Time Holding hands</h4>
+                    <p>langsung skip kesini, nanti kebanyakan pula fotonya hehehe. disini perasaan saya seneng banget. ternyata ada perempuan yang mau pegangan tangan sama saya. tangan ayang hangat bangettt, serasa menjadi lelaki paling beruntung didunia euyyy</p>
+                    <div class="gallery-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>degdegan brutal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MINI GALLERY - UKURAN MENGIKUTI FOTO -->
+        <div class="mini-gallery-container">
+            <h2 class="mini-gallery-title">ini langsung skip pas udah pacaran 💕</h2>
+            <p class="mini-gallery-subtitle">banyak betul foto random kita ayangg, hehehehe . jadi pengen saya masukin semua rencananya</p>
+            
+            <div class="mini-gallery-grid">
+                <!-- Foto 1 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="assets/gallery/mini1.jpg" alt="Moment kecil 1" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">                    
+                </div>
+                
+                <!-- Foto 2 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="assets/gallery/mini2.jpg" alt="Moment kecil 2" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 3 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini3.jpg" alt="Moment kecil 3" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 4 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini4.jpg" alt="Moment kecil 4" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 5 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini5.jpg" alt="Moment kecil 5" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 6 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini6.jpg" alt="Moment kecil 6" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 7 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini7.jpg" alt="Moment kecil 7" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 8 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini8.jpg" alt="Moment kecil 8" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                 
+                </div>
+                
+                <!-- Foto 9 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini9.jpg" alt="Moment kecil 9" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 10 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini10.jpg" alt="Moment kecil 10" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 11 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini11.jpg" alt="Moment kecil 11" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+                
+                <!-- Foto 12 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini12.jpg" alt="Moment kecil 12" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+
+                 <!-- Foto 13 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini13.jpg" alt="Moment kecil 13" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+
+                 <!-- Foto 14 - Akan terdeteksi otomatis -->
+                <div class="mini-gallery-item">
+                    <img src="./assets/gallery/mini14.jpg" alt="Moment kecil 14" class="mini-gallery-img" onerror="this.onerror=null; this.style.display='none';" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- AREA PENUTUP -->
+        <div class="closure-container">
+            <h2 class="closure-title">Untuk Cintaku Terindah 💖</h2>
+            
+            <div class="closure-message">
+                <p>Bingung saya mau nulis penutup apa euy. Tapi yang pasti, setiap hari bersamamu adalah anugerah terbesar dalam hidupku. EAAA</p>
+                
+                <p>ooo iyaa, saya ingatt ada slogan kita ayangg</p>
+
+                <p>love you forever and ever forever and ever forever and ever ever 💖</p>
+                
+                <p>Selamat Hari Valentine, cintaku! 💝</p>
+            </div>
+            
+            <div class="closure-signature">
+                Jangan lupa berak tiap hari ya ayangg,<br>
+                <span style="color: #c9184a; font-size: 2.5rem;">Your beloved Rismun</span>
+            </div>
+            
+            <div class="closure-date">
+                <i class="far fa-calendar-alt"></i>
+                <span>Valentine 2026</span>
+            </div>
+        </div>
+        
+        <!-- Love Meter -->
+        <div class="love-meter">
+            <h2 class="meter-title">Our Love Meter 💘</h2>
+            <div class="meter-bar">
+                <div class="meter-fill" id="loveMeter" style="width: 100%;"></div>
+            </div>
+            <p id="loveMessage">Maximum Love! 💘 You complete me!</p>
+            <button class="btn btn-love" id="boostLoveBtn">
+                <i class="fas fa-heart me-2"></i> Boost Our Love!
+            </button>
+        </div>
+        
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <p>Made with <i class="fas fa-heart" style="color: #ff4d6d;"></i> for my Carino</p>
+            <p class="small">Every day with you feels like Valentine's Day 💝 You're my greatest blessing!</p>
+        </div>
+    </div>
+    
+    <!-- JavaScript Dashboard -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const daysElement = document.getElementById('days');
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
+            const loveMeter = document.getElementById('loveMeter');
+            const loveMessage = document.getElementById('loveMessage');
+            const boostLoveBtn = document.getElementById('boostLoveBtn');
+            
+            // Variables
+            let loveLevel = 100;
+            const maxLoveLevel = 150;
+            
+            // Set Valentine's Day (14 Februari jam 7 malam)
+            const valentineDate = new Date();
+            valentineDate.setMonth(1); // February (0-indexed)
+            valentineDate.setDate(14);
+            valentineDate.setHours(19, 0, 0, 0); // 7 PM
+            
+            // Jika Valentine's Day sudah lewat tahun ini, set tahun depan
+            if (valentineDate < new Date()) {
+                valentineDate.setFullYear(valentineDate.getFullYear() + 1);
+            }
+            
+            // Update Countdown Timer
+            function updateCountdown() {
+                const now = new Date();
+                const difference = valentineDate - now;
+                
+                if (difference > 0) {
+                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                    
+                    daysElement.textContent = days.toString().padStart(2, '0');
+                    hoursElement.textContent = hours.toString().padStart(2, '0');
+                    minutesElement.textContent = minutes.toString().padStart(2, '0');
+                    secondsElement.textContent = seconds.toString().padStart(2, '0');
+                } else {
+                    // Valentine's Day telah tiba!
+                    daysElement.textContent = '00';
+                    hoursElement.textContent = '00';
+                    minutesElement.textContent = '00';
+                    secondsElement.textContent = '00';
+                    document.querySelector('.countdown-container p').textContent = "🎉 Valentine's Day is here! Happy Valentine's Day, my love! ❤️";
+                }
+            }
+            
+            // Update Love Meter
+            function updateLoveMeter() {
+                loveMeter.style.width = `${loveLevel}%`;
+                
+                if (loveLevel >= 150) {
+                    loveMessage.textContent = "OVERFLOWING LOVE! 💖💖💖 You're my everything!";
+                    loveMeter.style.background = 'linear-gradient(90deg, #ff4d6d, #ffd166, #38b000)';
+                } else if (loveLevel >= 130) {
+                    loveMessage.textContent = "Extreme Love! 💕 Can't live without you!";
+                    loveMeter.style.background = 'linear-gradient(90deg, #ff4d6d, #ff8fa3)';
+                } else if (loveLevel >= 110) {
+                    loveMessage.textContent = "Maximum Love! 💘 You complete me!";
+                } else if (loveLevel >= 90) {
+                    loveMessage.textContent = "Strong Love! ❤️ You make me so happy!";
+                } else if (loveLevel >= 70) {
+                    loveMessage.textContent = "Growing Love! 💝 Every day gets better!";
+                } else {
+                    loveMessage.textContent = "New Love! 💗 Our journey begins!";
+                }
+            }
+            
+            // Boost Love Button
+            boostLoveBtn.addEventListener('click', function() {
+                if (loveLevel < maxLoveLevel) {
+                    loveLevel += 5;
+                    if (loveLevel > maxLoveLevel) loveLevel = maxLoveLevel;
+                    updateLoveMeter();
+                    
+                    // Efek tombol
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                    
+                    // Efek hati
+                    createHeartEffect(this.getBoundingClientRect());
+                }
+            });
+            
+            // Fungsi buat efek hati
+            function createHeartEffect(buttonRect) {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.innerHTML = '❤️';
+                        heart.style.position = 'fixed';
+                        heart.style.fontSize = '25px';
+                        heart.style.color = '#ff4d6d';
+                        heart.style.zIndex = '1000';
+                        heart.style.pointerEvents = 'none';
+                        heart.style.left = `${buttonRect.left + buttonRect.width/2}px`;
+                        heart.style.top = `${buttonRect.top}px`;
+                        heart.style.transform = 'translate(-50%, -50%)';
+                        document.body.appendChild(heart);
+                        
+                        // Animasi
+                        const angle = (Math.random() * Math.PI * 2);
+                        const distance = 100 + Math.random() * 100;
+                        const targetX = Math.cos(angle) * distance;
+                        const targetY = Math.sin(angle) * distance;
+                        
+                        heart.animate([
+                            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                            { transform: `translate(${targetX}px, ${targetY}px) scale(0.5)`, opacity: 0 }
+                        ], {
+                            duration: 1500,
+                            easing: 'ease-out'
+                        });
+                        
+                        // Hapus setelah animasi
+                        setTimeout(() => heart.remove(), 1500);
+                    }, i * 100);
+                }
+            }
+            
+            // Efek scroll smooth untuk gallery items
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            galleryItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(50px)';
+                item.style.transition = 'all 0.8s ease';
+                observer.observe(item);
+                
+                // Tambah delay bertahap
+                const index = Array.from(galleryItems).indexOf(item);
+                item.style.transitionDelay = `${index * 0.1}s`;
+            });
+            
+            // Optimasi gambar - tambah efek fade in saat gambar load
+            const images = document.querySelectorAll('.gallery-img-container img');
+            images.forEach(img => {
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.5s ease';
+                
+                img.onload = function() {
+                    this.style.opacity = '1';
+                };
+                
+                // Jika gambar sudah cached
+                if (img.complete) {
+                    img.style.opacity = '1';
+                }
+            });
+            
+            // Deteksi orientasi foto untuk mini gallery
+            function detectImageOrientation() {
+                const miniImages = document.querySelectorAll('.mini-gallery-img');
+                
+                miniImages.forEach(img => {
+                    const container = img.closest('.mini-gallery-item');
+                    
+                    img.onload = function() {
+                        const width = this.naturalWidth;
+                        const height = this.naturalHeight;
+                        
+                        // Hapus semua class orientasi terlebih dahulu
+                        container.classList.remove('portrait', 'landscape', 'square');
+                        
+                        // Tentukan orientasi berdasarkan aspect ratio
+                        if (width > height) {
+                            // Landscape (lebar > tinggi)
+                            container.classList.add('landscape');
+                        } else if (height > width) {
+                            // Portrait (tinggi > lebar)
+                            container.classList.add('portrait');
+                        } else {
+                            // Square (sama)
+                            container.classList.add('square');
+                        }
+                    };
+                    
+                    // Jika gambar sudah cached
+                    if (img.complete) {
+                        img.onload();
+                    }
+                });
+            }
+            
+            // Panggil fungsi deteksi setelah halaman load
+            setTimeout(detectImageOrientation, 100);
+            
+            // Efek hover untuk mini gallery
+            const miniGalleryItems = document.querySelectorAll('.mini-gallery-item');
+            
+            miniGalleryItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    // Efek zoom dan shadow
+                    this.style.transform = 'translateY(-8px) scale(1.05)';
+                    this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.25)';
+                    
+                    // Sembunyikan ikon jika ada gambar
+                    const icon = this.querySelector('i');
+                    const img = this.querySelector('img');
+                    if (img && img.style.display !== 'none') {
+                        icon.style.opacity = '0';
+                    }
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    // Kembali ke keadaan normal
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
+                    
+                    // Tampilkan kembali ikon
+                    const icon = this.querySelector('i');
+                    icon.style.opacity = '0.7';
+                });
+            });
+            
+            // Inisialisasi
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            updateLoveMeter();
+            
+            // Tambah love level secara acak
+            setInterval(() => {
+                if (loveLevel < maxLoveLevel && Math.random() > 0.8) {
+                    loveLevel += 1;
+                    updateLoveMeter();
+                }
+            }, 10000);
+        });
+    </script>
+</body>
+</html>

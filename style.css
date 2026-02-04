@@ -1,0 +1,497 @@
+:root {
+    --primary-pink: #ff4d6d;
+    --secondary-pink: #ff8fa3;
+    --light-pink: #fff0f3;
+    --dark-pink: #c9184a;
+    --success-green: #38b000;
+    --gold: #ffd166;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #ffafcc, #ffc8dd, #cdb4db, #bde0fe);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #333;
+    touch-action: manipulation;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.valentine-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card-valentine {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 25px;
+    border: 8px solid var(--primary-pink);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.card-header-valentine {
+    background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+    padding: 30px 20px 20px;
+    text-align: center;
+    position: relative;
+    border-bottom: 5px solid var(--gold);
+}
+
+.card-header-valentine h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+
+.card-header-valentine p {
+    color: var(--light-pink);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.initials-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.initial-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    border: 2px solid var(--gold);
+}
+
+.heart-decoration {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: var(--gold);
+    animation: heartbeat 1.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.card-body-valentine {
+    padding: 30px 20px;
+}
+
+.question-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.question-container h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: var(--dark-pink);
+    margin-bottom: 15px;
+}
+
+.question-container .lead {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 500px;
+    margin: 0 auto 20px;
+}
+
+.buttons-container {
+    position: relative;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 30px;
+    background-color: rgba(255, 240, 243, 0.4);
+    border-radius: 15px;
+    margin: 20px 0;
+    overflow: visible !important;
+}
+
+.btn-valentine {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    min-width: 160px;
+    position: relative;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.btn-yes {
+    background: linear-gradient(145deg, var(--success-green), #2d9100);
+    color: white;
+}
+
+.btn-yes:hover, .btn-yes:focus {
+    background: linear-gradient(145deg, #2d9100, var(--success-green));
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-no {
+    background: linear-gradient(145deg, var(--primary-pink), var(--dark-pink));
+    color: white;
+    position: relative;
+    z-index: 10;
+}
+
+.btn-no:hover, .btn-no:focus {
+    background: linear-gradient(145deg, var(--dark-pink), var(--primary-pink));
+}
+
+.btn-yes.enlarged {
+    animation: gentleEnlarge 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes gentleEnlarge {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1.15); }
+}
+
+.message-container {
+    display: none;
+    background: linear-gradient(135deg, #fff0f3, white);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 6px solid var(--primary-pink);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-container h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--dark-pink);
+    margin-bottom: 15px;
+}
+
+.message-container p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+.hearts-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 18px;
+    color: var(--primary-pink);
+    opacity: 0;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100px) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+.footer-valentine {
+    text-align: center;
+    padding: 15px;
+    color: #666;
+    font-size: 0.8rem;
+    border-top: 2px solid rgba(255, 77, 109, 0.2);
+    margin-top: 15px;
+}
+
+.click-counter {
+    background-color: var(--light-pink);
+    border-radius: 8px;
+    padding: 8px 15px;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--dark-pink);
+}
+
+.click-counter.updated {
+    animation: pulseCounter 0.3s ease;
+}
+
+@keyframes pulseCounter {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.no-clicked {
+    animation: gentleShake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes gentleShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+}
+
+/* Settings Panel */
+.settings-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    width: 280px;
+    max-height: 70vh;
+    overflow-y: auto;
+    border: 2px solid var(--primary-pink);
+    display: none;
+    backdrop-filter: blur(5px);
+}
+
+.settings-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-pink);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.settings-toggle:hover {
+    transform: scale(1.1);
+}
+
+.settings-header {
+    background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.settings-header h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.setting-item {
+    margin-bottom: 12px;
+}
+
+.setting-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--dark-pink);
+    font-size: 0.9rem;
+}
+
+.setting-value {
+    font-weight: bold;
+    color: var(--primary-pink);
+}
+
+.setting-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--light-pink);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.setting-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary-pink);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.preset-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.preset-btn {
+    padding: 6px 10px;
+    background: var(--light-pink);
+    border: 2px solid var(--primary-pink);
+    border-radius: 6px;
+    color: var(--dark-pink);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.preset-btn:hover {
+    background: var(--primary-pink);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-header-valentine h1 {
+        font-size: 2.2rem;
+    }
+    
+    .question-container h2 {
+        font-size: 1.8rem;
+    }
+    
+    .question-container .lead {
+        font-size: 1rem;
+    }
+    
+    .btn-valentine {
+        padding: 12px 30px;
+        font-size: 1.3rem;
+        min-width: 140px;
+    }
+    
+    .buttons-container {
+        min-height: 120px;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .message-container h3 {
+        font-size: 1.8rem;
+    }
+    
+    .settings-panel {
+        width: 250px;
+        right: 10px;
+        top: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-header-valentine h1 {
+        font-size: 1.8rem;
+    }
+    
+    .question-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .btn-valentine {
+        padding: 10px 25px;
+        font-size: 1.2rem;
+        min-width: 120px;
+    }
+    
+    .buttons-container {
+        flex-direction: column;
+        min-height: 180px;
+        gap: 15px;
+    }
+    
+    .card-body-valentine {
+        padding: 20px 15px;
+    }
+    
+    .settings-panel {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+    }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💝</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- CSS Utama -->
+    <link rel="stylesheet" href="style.css">
+    <!-- CSS Dashboard (preload) -->
+    <link rel="preload" href="dashboard.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="dashboard.css"></noscript>
+</head>
+<body>
+    <!-- Background hearts (minimal) -->
+    <div class="hearts-bg" id="heartsBg"></div>
+    
+    <!-- Main Valentine Page -->
+    <div class="valentine-container" id="valentinePage">
+        <div class="card-valentine">
+            <!-- Header -->
+            <div class="card-header-valentine">
+                <span class="heart-decoration"><i class="fas fa-heart"></i></span>
+                <h1>Happy Valentine's Day! 💝</h1>
+                <p class="mb-0">A special question for someone special...</p>
+                
+                <div class="initials-container">
+                    <div class="initial-circle">K</div>
+                    <div class="initial-circle">❤️</div>
+                    <div class="initial-circle">K</div>
+                </div>
+            </div>
+            
+            <!-- Body -->
+            <div class="card-body-valentine">
+                <!-- Question -->
+                <div class="question-container">
+                    <h2>Dear Carino,</h2>
+                    <p class="lead">You mean the world to me, and I have something important to ask...</p>
+                    
+                    <div class="display-4 fw-bold text-dark-pink" style="color: var(--dark-pink); animation: pulse 2s infinite;">
+                        Will you be my Valentine? 💌
+                    </div>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="buttons-container" id="buttonsContainer">
+                    <button class="btn btn-valentine btn-yes" id="yesBtn">
+                        <i class="fas fa-heart me-2"></i> YES!
+                    </button>
+                    
+                    <button class="btn btn-valentine btn-no" id="noBtn">
+                        <i class="fas fa-times me-2"></i> NO
+                    </button>
+                </div>
+                
+                <!-- Message (hidden by default) -->
+                <div class="message-container" id="messageContainer">
+                    <h3>Yay! You Made Me The Happiest! 💖</h3>
+                    <p class="mb-3">I'm over the moon that you said YES! Preparing something special for you...</p>
+                    <div class="d-flex justify-content-center mt-4">
+                        <div class="p-3 rounded" style="background-color: var(--light-pink);">
+                            <i class="fas fa-gift fa-2x me-3" style="color: var(--primary-pink);"></i>
+                            <span class="fs-5">Taking you to our special dashboard...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Click counter -->
+                <div class="text-center mt-4">
+                    <div class="click-counter" id="clickCounter">
+                        <i class="fas fa-mouse-pointer me-2"></i>
+                        <span id="clickCount">0</span> kali saya ditolak
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer-valentine">
+                <p class="mb-2">Made with <i class="fas fa-heart" style="color: var(--primary-pink);"></i> for my big and tantrum Baby</p>
+                <p class="small text-muted">semuaaaaaaaaaaaaaaaaaaaaaaa untuk ayangggggg , MWHEHEHEHEHEHEHEHEEH</p>
+            </div>
+        </div>
+
+    
+    <!-- Settings Toggle -->
+    <button class="settings-toggle" id="settingsToggle">
+        <i class="">Luv</i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
